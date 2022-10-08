@@ -9,4 +9,4 @@ namespace: goapp
 images:
 - name: goapp
   newName: jeanpsampaio/argocd-fullcycle
-  newTag: a9b3efe078a1800578cdbafb273f366ba27573b7
+  newTag: 71705aafa293d6e955101e00f9c7711f1fea90ff
