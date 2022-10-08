@@ -114,4 +114,15 @@ jobs:
           tags: ${{ github.sha }}, latest 
 
 cd fullcycle
+
+git init 
 gh repo create 
+
+git branch -M main 
+git push -u origin main 
+git remote add origin https://github.com/jeansampaio/argocd-fullcycle.git
+git push --set-upstream origin main 
+
+Docker/Setting/Security/Create token 
+GitHub/Repositorio do Projeto/Setting/Security/Actions secrets
+git push origin main
