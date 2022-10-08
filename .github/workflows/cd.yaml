@@ -15,5 +15,5 @@ jobs:
         with:
           username: jeanpsampaio
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: jeansampaio/argocd-fullcycle
+          repository: jeanpsampaio/argocd-fullcycle
           tags: ${{ github.sha }}, latest 

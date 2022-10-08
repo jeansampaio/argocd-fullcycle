@@ -7,6 +7,6 @@ resources:
 namespace: goapp
 
 images:
-- name: jeanpsampaio/argocd-fullcycle
+- name: jeanpsampaio/argocd-fullcycle:latest
   newName: jeanpsampaio/argocd-fullcycle
   newTag: v1
