@@ -10,6 +10,3 @@ images:
 - name: goapp
   newName: jeanpsampaio/argocd-fullcycle
   newTag: a9b3efe078a1800578cdbafb273f366ba27573b7
-- name: jeanpsampaio/argocd-fullcycle:latest
-  newName: jeanpsampaio/argocd-fullcycle
-  newTag: v1
