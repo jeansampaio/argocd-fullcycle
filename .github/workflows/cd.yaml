@@ -13,7 +13,7 @@ jobs:
       - name: build image and push to docker hub
         uses: docker/build-push-action@v1.1.0
         with:
-          username: jeansampaio
+          username: jeanpsampaio
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: jeansampaio/argocd-fullcycle
           tags: ${{ github.sha }}, latest 
