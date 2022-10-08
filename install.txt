@@ -1,0 +1,117 @@
+\\wsl.localhost\Ubuntu-22.04\usr\local\bin
+
+cd fullcycle
+
+docker build -t jeanpsampaio/argocd-fullcycle:latest .
+
+docker push jeanpsampaio/argocd-fullcycle:latest
+
+docker run --rm -p 8080:8080 jeanpsampaio/argocd-fullcycle:latest
+
+mkdir k8s 
+
+kind create cluster --image=kindest/node:v1.21.2 --name dev
+
+create deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goapp
+spec:
+  selector:
+    matchLabels:
+      app: goapp
+  template:
+    metadata:
+      labels:
+        app: goapp
+    spec:
+      containers:
+      - name: goapp
+        image: jeanpsampaio/argocd-fullcycle:latest
+        ports:
+        - containerPort: 8080
+
+kubectl apply -f k8s/deployment.yaml
+
+kubectl get pods 
+
+create service.yaml /fullcycle/k8s/
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: goapp
+spec:
+  selector:
+    app: goapp
+  ports:
+  - port: 8080
+    targetPort: 8080
+
+kubectl apply -f k8s/service.yaml 
+
+kubectl get svc 
+
+kubectl port-forward svc/goapp 8080:8080
+
+kustomize build 
+
+create kustomization.yaml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- deployment.yaml
+- service.yaml
+
+namespace: goapp
+
+images:
+- name: goapp
+  newName: jeanpsampaio/argocd-fullcycle
+  newTag: latest
+
+kustomize build 
+
+change kustomization.yaml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- deployment.yaml
+- service.yaml
+
+namespace: goapp
+
+images:
+- name: goapp
+  newName: jeanpsampaio/argocd-fullcycle
+  newTag: v1
+
+kustomize build 
+
+Create github action 
+
+name: CD
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      
+      - name: build image and push to docker hub
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: wesleywillians
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tags: ${{ github.sha }}, latest 
+
+cd fullcycle
+gh repo create 
